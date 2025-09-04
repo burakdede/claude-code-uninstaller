@@ -294,8 +294,7 @@ cleanup_npm_installation() {
         if npm list -g @anthropic-ai/claude-code >/dev/null 2>&1; then
             log_info "Found npm installation, using official uninstall method..."
             local npm_output
-            npm_output=$(npm uninstall -g @anthropic-ai/claude-code 2>&1)
-            if [ $? -eq 0 ]; then
+            if npm_output=$(npm uninstall -g @anthropic-ai/claude-code 2>&1); then
                 log_success "Removed Claude Code via official npm uninstall"
                 removed_npm=true
             else

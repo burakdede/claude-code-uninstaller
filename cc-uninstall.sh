@@ -64,7 +64,7 @@ log_error() {
 case "$(uname -s)" in
     Darwin) os="darwin" ;;
     Linux) os="linux" ;;
-    *) log_error "Windows is not supported"; exit 1 ;;
+    *) log_error "Native Windows is not supported. Please use WSL (Windows Subsystem for Linux)"; exit 1 ;;
 esac
 
 case "$(uname -m)" in

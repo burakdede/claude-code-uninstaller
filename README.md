@@ -18,8 +18,8 @@ This script provides a clean slate by removing all Claude Code installations and
 ## Usage
 
 ```bash
-chmod +x uninstall-claude.sh
-./uninstall-claude.sh
+chmod +x cc-uninstall.sh
+./cc-uninstall.sh
 ```
 
 **Options:**
@@ -30,10 +30,10 @@ chmod +x uninstall-claude.sh
 **Examples:**
 ```bash
 # Interactive (asks before removing ~/.claude)
-./uninstall-claude.sh
+./cc-uninstall.sh
 
 # Automation/CI-CD
-./uninstall-claude.sh --quiet
+./cc-uninstall.sh --quiet
 ```
 
 ## What Gets Removed

@@ -1,5 +1,7 @@
 # Claude Code Uninstaller
 
+**[PowerShell Version Available](README-WINDOWS.md)** - If you're on Windows without WSL or other bash support, there is a PowerShell version.
+
 Anthropic's native binary installation (currently in beta) doesn't provide an uninstall method. This script removes both npm and native binary installations completely.
 
 **Use Anthropic's official uninstall when they release one.** This is a temporary solution.
@@ -85,6 +87,7 @@ Script returns exit code 0 on success, non-zero if issues occurred.
 - macOS (Intel/Apple Silicon)
 - Linux (x64/ARM, including Alpine/musl)
 - Windows via WSL
+- Windows (no WSL) - **[See PowerShell version](README-WINDOWS.md)**
 
 ## License
 

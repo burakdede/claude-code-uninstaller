@@ -1,58 +1,44 @@
 # Claude Code Uninstaller
 
-Anthropic's native binary installation (currently in beta) doesn't provide an uninstall method. This script removes both npm and native binary installations completely.
-
-**Use Anthropic's official uninstall when they release one.** This is a temporary solution.
-
-## Why This Exists
-
-The native binary installation lacks proper uninstall functionality, and having both npm and native binary versions installed can cause conflicts and break your local setup. Common issues include:
-
-- Mixed installations pointing to different binaries
-- Shell completions from both versions conflicting  
-- PATH resolution picking the wrong installation
-- npm's uninstall failing with ENOTEMPTY errors
-
-This script provides a clean slate by removing all Claude Code installations and configurations, regardless of how they were installed.
-
 ## Usage
 
-```bash
-chmod +x uninstall-claude.sh
-./uninstall-claude.sh
+```powershell
+& .\cc-uninstall.ps1
 ```
 
 **Options:**
-- `--force` - Skip prompts
-- `--quiet` - Silent mode (implies --force, perfect for scripts)
-- `--help` - Show help
+- `-Force` - Skip prompts
+- `-Quiet` - Silent mode (implies -Force, perfect for scripts)
+- `-Help` - Show help
 
 **Examples:**
-```bash
-# Interactive (asks before removing ~/.claude)
-./uninstall-claude.sh
+```powershell
+# Interactive (asks before removing $env:USERPROFILE\.claude)
+& .\cc-uninstall.ps1
 
 # Automation/CI-CD
-./uninstall-claude.sh --quiet
+& .\cc-uninstall.ps1 -Quiet
 ```
 
 ## What Gets Removed
 
-- **Binaries**: `~/.local/bin/claude`, `/usr/local/bin/claude`, etc.
+- **Binaries**: `%LOCALAPPDATA%\Programs\Claude\claude.exe`, `%USERPROFILE%\.local\bin\claude.exe`, etc.
 - **NPM packages**: Global installations and broken leftovers
-- **Shell configs**: Removes Claude lines from `.bashrc`, `.zshrc`, etc. (creates backups)
-- **Data directory**: `~/.claude` (prompts unless --force)
+- **PowerShell profiles**: Removes Claude lines from PowerShell profile files (creates backups)
+- **Registry entries**: Windows registry keys for Claude/Anthropic
+- **Shortcuts**: Start Menu and Desktop shortcuts
+- **Data directory**: `%USERPROFILE%\.claude` (prompts unless -Force)
 
 ## Safety Features
 
-**Shell config backups**: Before modifying any shell config file, creates timestamped backups:
-```bash
-~/.zshrc.claude-backup.20250904-143022
+**PowerShell profile backups**: Before modifying any profile file, creates timestamped backups:
+```powershell
+$PROFILE.claude-backup.20250904-143022
 ```
 
-**Path validation**: Only removes the expected `~/.claude` directory, refuses to delete unexpected paths.
+**Path validation**: Only removes the expected `%USERPROFILE%\.claude` directory, refuses to delete unexpected paths.
 
-**Binary safety**: Only removes files ending with `/claude` from PATH to prevent accidents.
+**Binary safety**: Only removes files ending with `\claude.exe` or Claude-related registry entries.
 
 **Exit codes**: Returns 0 on success, non-zero if any major operation failed (good for CI/CD).
 
@@ -68,26 +54,20 @@ But if that fails with ENOTEMPTY errors (common), run this script instead.
 ## Troubleshooting
 
 **"Could not remove" warnings:**
-```bash
+```powershell
 # Script shows exact commands to run
-sudo rm -f /usr/local/bin/claude
+Remove-Item -Force "$env:USERPROFILE\.local\bin\claude.exe"
 ```
 
 **Claude still in PATH after uninstall:**
-1. Restart terminal
-2. Run `./cc-uninstall.sh --force` again
+1. Restart PowerShell/terminal
+2. Run `powershell -ExecutionPolicy Bypass -File cc-uninstall.ps1 -Force` again
 
 **For automation:**
 Script returns exit code 0 on success, non-zero if issues occurred.
 
 ## Platform Support
 
-- macOS (Intel/Apple Silicon)
-- Linux (x64/ARM, including Alpine/musl)
+- Windows (No WSL - native installer)
+- Windows (No WSL - npm installer)
 - Windows via WSL
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-Use at your own risk. Script removes files and directories.

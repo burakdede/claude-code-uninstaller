@@ -52,7 +52,7 @@ chmod +x cc-uninstall.sh
 ~/.zshrc.claude-backup.20250904-143022
 ```
 
-**Automatic asset backups**: Every directory/file deleted by the script (`~/.claude`, `~/.local/share/claude`, `~/.claude.json`, project `.claude/`, `.mcp.json`) is copied next to the original as `<name>.claude-backup.<timestamp>`. Restore by moving or copying that backup back into place.
+**Automatic asset backups**: Every directory/file deleted by the script (`~/.claude`, `~/.local/share/claude`, `~/.claude.json`, project `.claude/`, `.mcp.json`, npm installs, PATH binaries) is copied next to the original as `<name>.claude-backup.<timestamp>`. Restore by moving or copying that backup back into place, and you can confirm they exist with `ls <path>.claude-backup.*`.
 
 **Path validation**: Only removes the expected `~/.claude` directory, refuses to delete unexpected paths.
 

@@ -215,8 +215,7 @@ remove_shell_integration() {
     
     for config_file in "${SHELL_CONFIGS[@]}"; do
         if [ -f "$config_file" ]; then
-            # backup before modifying
-            cp "$config_file" "${config_file}.claude-backup.$(date +%Y%m%d-%H%M%S)" 2>/dev/null || true
+            create_backup "$config_file"
             
             # sed syntax differs between macOS and Linux
             if [ "$os" = "darwin" ]; then
@@ -289,6 +288,7 @@ remove_binaries() {
     
     for binary_path in "${BINARY_PATHS[@]}"; do
         if [ -f "$binary_path" ]; then
+            create_backup "$binary_path"
             if rm -f "$binary_path" 2>/dev/null; then
                 removed_count=$((removed_count + 1))
                 log_success "Removed binary: $binary_path"
@@ -305,6 +305,7 @@ remove_binaries() {
         claude_in_path=$(find_command claude)
         # safety check - only remove files ending with "claude"
         if [ -f "$claude_in_path" ] && [[ "$claude_in_path" == */claude ]]; then
+            create_backup "$claude_in_path"
             if rm -f "$claude_in_path" 2>/dev/null; then
                 removed_count=$((removed_count + 1))
                 log_success "Removed binary from PATH: $claude_in_path"
@@ -352,6 +353,7 @@ cleanup_npm_installation() {
         local npm_bin
         npm_bin=$(npm bin -g 2>/dev/null)
         if [ -n "$npm_bin" ] && [ -f "$npm_bin/claude" ]; then
+            create_backup "$npm_bin/claude"
             if rm -f "$npm_bin/claude" 2>/dev/null; then
                 log_success "Removed npm binary: $npm_bin/claude"
                 removed_npm=true
@@ -365,6 +367,7 @@ cleanup_npm_installation() {
     # manual cleanup of npm directories
     for npm_path in "${NPM_PATHS[@]}"; do
         if [ -d "$npm_path" ]; then
+            create_backup "$npm_path"
             if rm -rf "$npm_path" 2>/dev/null; then
                 log_success "Removed npm installation directory: $npm_path"
                 removed_npm=true

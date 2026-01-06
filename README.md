@@ -39,9 +39,11 @@ chmod +x cc-uninstall.sh
 ## What Gets Removed
 
 - **Binaries**: `~/.local/bin/claude`, `/usr/local/bin/claude`, etc.
+- **Data cache**: `~/.local/share/claude`
 - **NPM packages**: Global installations and broken leftovers
 - **Shell configs**: Removes Claude lines from `.bashrc`, `.zshrc`, etc. (creates backups)
-- **Data directory**: `~/.claude` (prompts unless --force)
+- **User settings**: `~/.claude`, `~/.claude.json`
+- **Project settings**: `.claude/` directory and `.mcp.json` in the directory where you run the script
 
 ## Safety Features
 
@@ -49,6 +51,8 @@ chmod +x cc-uninstall.sh
 ```bash
 ~/.zshrc.claude-backup.20250904-143022
 ```
+
+**Automatic asset backups**: Every directory/file deleted by the script (`~/.claude`, `~/.local/share/claude`, `~/.claude.json`, project `.claude/`, `.mcp.json`) is copied next to the original as `<name>.claude-backup.<timestamp>`. Restore by moving or copying that backup back into place.
 
 **Path validation**: Only removes the expected `~/.claude` directory, refuses to delete unexpected paths.
 

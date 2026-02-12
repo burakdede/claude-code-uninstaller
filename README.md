@@ -1,5 +1,7 @@
 # Claude Code Uninstaller
 
+**[PowerShell Version Available](README-WINDOWS.md)** - If you're on Windows without WSL or other bash support, there is a PowerShell version.
+
 Anthropic's native binary installation (currently in beta) doesn't provide an uninstall method. This script removes both npm and native binary installations completely.
 
 **Anthropic now provides [official uninstall instructions](https://code.claude.com/docs/en/setup#uninstall-claude-code).** As of 2026‑01‑06 you can follow their guide directly, but this script remains available if you prefer a single command that cleans up every installation source and makes backups for you.
@@ -95,6 +97,7 @@ sudo rm -f /usr/local/bin/claude
 - macOS (Intel/Apple Silicon)
 - Linux (x64/ARM, including Alpine/musl)
 - Windows via WSL
+- Windows (no WSL) - **[See PowerShell version](README-WINDOWS.md)**
 
 ## License
 
